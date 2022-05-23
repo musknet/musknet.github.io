@@ -1,0 +1,766 @@
+<!--
+=========================================================
+* Argon Dashboard 2 - v2.0.2
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://www.creative-tim.com/license)
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+  <title>
+  
+  Dashboard
+
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+  
+  <!-- CSS Files -->
+  <link id="pagestyle" href="./assets/css/argon-dashboard.css?v=2.0.2" rel="stylesheet" />
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  
+  
+  
+  
+  
+  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+ 
+    var config = {
+     apiKey: "AIzaSyBAskh_jJ_G2ULKhq7BRB9AqoB02d-5oLk",
+
+authDomain: "musk-network.firebaseapp.com",
+
+databaseURL: "https://musk-network-default-rtdb.firebaseio.com",
+
+projectId: "musk-network",
+
+storageBucket: "musk-network.appspot.com",
+
+messagingSenderId: "332907680949",
+
+appId: "1:332907680949:web:2fecbe138dce0de37b9afc",
+
+measurementId: "G-3RDS3MEQFR"
+
+ };
+ 
+    firebase.initializeApp(config);
+  </script>
+
+
+  <script>
+      
+
+  </script>
+
+
+  <script>
+      var link_left, link_right;
+      var direct_bonus;
+      function go()
+      {
+          var username = sessionStorage.getItem("username");
+          var my_investment, binary;
+
+           if(sessionStorage.getItem("username") == null)
+           {
+             location.replace("../Login.html");
+           }
+
+
+          document.getElementById("user").innerHTML = username;
+          link_left = "https://musknet.github.io/Registration.html?referral="+username+"&&position=left";
+          link_right = "https://musknet.github.io/Registration.html?referral="+username+"&&position=right";
+          document.getElementById("print-link-left").innerHTML = link_left;
+
+         
+          
+          var databaseRef = firebase.database().ref('users/');
+          var withdraws_total;
+
+          databaseRef.once('value', function(snapshot) {
+          snapshot.forEach(function(childSnapshot) {
+          var childKey = childSnapshot.key;
+          var childData = childSnapshot.val();
+          
+           console.log("okay"); 
+           console.log(childKey)  
+              if(childKey == sessionStorage.getItem('username'))
+              {
+              
+                //   window.alert(childData.balance);
+              console.log(childData.balance);
+              
+           //document.getElementById("direct_referral").innerHTML = childData.direct_referral;
+           document.getElementById("direct_referral").innerHTML = '<font color="red">' + childData.balance + '</font>';
+           document.getElementById("withdraws").innerHTML = childData.withdraws;
+     
+           var total_balance = parseInt(childData.direct_referral) + parseInt(childData.left_balance) - parseInt(childData.withdraws);
+           document.getElementById("direct").innerHTML = total_balance;
+           var net_profit = parseInt(childData.direct_referral) + parseInt(childData.left_balance);
+           document.getElementById("net").innerHTML = '<font color="blue">' + net_profit + '</font>';
+           sessionStorage.setItem("withdrawable_balance", total_balance);
+
+                      
+           if(childData.balance < 15000)
+           {
+             document.getElementById("withdraw_view").innerHTML = "";
+             document.getElementById("status").innerHTML = '<font color="red">INACTIVE</font>';
+             document.getElementById("inactive").innerHTML = "";
+             document.getElementById("print-link-left").innerHTML = "<font color=red> Please deposit to activate your account! </font>";
+
+
+           }
+           else{
+            document.getElementById("deposit_view").innerHTML = "";
+           }
+
+
+              }
+             
+
+
+});
+});
+
+
+
+
+var databaserefer = firebase.database().ref('/deposits/' + username +"/date");
+     var last_deposit_date;
+
+     databaserefer.on('value', (snapshot) =>{
+     const data = snapshot.val();
+     last_deposit_date = data;
+     // window.alert(data);
+
+     var time_now = Date();
+
+     function days_passed(dt) {
+     var current = new Date(dt.getTime());
+     var previous = new Date(dt.getFullYear(), 0, 1);
+
+    return Math.ceil((current - previous + 1) / 86400000);
+     }
+
+     var days_count = (days_passed(new Date()));
+
+     days_difference = days_count - last_deposit_date;
+  //   window.alert(days_difference);
+
+   
+
+
+
+    });
+    
+//Print dirrect refferals
+   var direct_table = document.getElementById('direct_reffarals_table');
+   var databaseRef = firebase.database().ref('users/');
+   var rowIndex = 1;
+   
+   databaseRef.once('value', function(snapshot) {
+     snapshot.forEach(function(childSnapshot) {
+    var childKey = childSnapshot.key;
+    var childData = childSnapshot.val();
+    
+    
+ 
+    if(childData.sponsor == sessionStorage.getItem("username"))
+    {
+
+    var row = direct_table.insertRow(rowIndex);
+    var cellUsername = row.insertCell(0);
+    var cellStatus = row.insertCell(1);
+
+    cellUsername.appendChild(document.createTextNode(childData.username));
+    if(childData.balance < 50){
+     cellStatus.appendChild(document.createTextNode("inactive"));  
+    }
+
+    else{
+     cellStatus.appendChild(document.createTextNode("active"));
+    }
+    
+    var reffered_user = childData.username;
+    
+   var indirect_table = document.getElementById('indirect_reffarals_table');
+   var databaseRef2 = firebase.database().ref('users/');
+   var rowIndex2 = 1;
+   
+   databaseRef2.once('value', function(snapshot) {
+     snapshot.forEach(function(childSnapshot) {
+    var childKey2 = childSnapshot.key;
+    var childData2 = childSnapshot.val();
+    
+    
+   // window.alert(reffered_user); 
+    if(childData2.sponsor == reffered_user)
+    {
+    var row2 = indirect_table.insertRow(rowIndex2);
+    var cellUsername2 = row2.insertCell(0);
+    var cellStatus2 = row2.insertCell(1);
+
+    cellUsername2.appendChild(document.createTextNode(childData2.username));
+    if(childData2.balance < 50){
+     cellStatus2.appendChild(document.createTextNode("inactive"));  
+    }
+
+    else{
+     cellStatus2.appendChild(document.createTextNode("active"));
+    }
+    
+    rowIndex2 = rowIndex2 + 1;
+    }
+    
+    
+     });
+   });
+ 
+
+
+   rowIndex = rowIndex + 1;
+    }
+    
+    
+     });
+   });
+ 
+
+
+
+
+      }
+
+
+     
+
+
+
+
+      function myFunction2() {
+             var target = link_right;
+             copyToClipboard(target);
+             alert("Referral Link Copied Successfully");
+         }
+
+
+         function myFunctionxvy() {
+             var target = link_left;
+             copyToClipboard(target);
+             alert("Referral Link Copied Successfully");
+         }
+
+         function copyToClipboard(e) {
+
+             var tempItem = document.createElement('input');
+
+             tempItem.setAttribute('type', 'text');
+             tempItem.setAttribute('display', 'none');
+
+             let content = e;
+             if (e instanceof HTMLElement) {
+                 content = e.innerHTML;
+             }
+
+             tempItem.setAttribute('value', content);
+             document.body.appendChild(tempItem);
+
+             tempItem.select();
+             document.execCommand('Copy');
+
+             tempItem.parentElement.removeChild(tempItem);
+         }
+
+         function function_logout()
+         {
+           console.log("okay");
+           sessionStorage.clear();
+           location.replace("../Login.html");
+         }
+
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body class="g-sidenav-show   bg-gray-100" onload="go()">
+  <div class="min-height-300 bg-primary position-absolute w-100"></div>
+ 
+  <main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+         
+            <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
+          </ol>
+          <h6 class="font-weight-bolder text-white mb-0" id="user">Dashboard</h6>
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+          
+          </div>
+          <ul class="navbar-nav  justify-content-end">
+           
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+
+
+
+
+
+
+     <!-- End Navbar -->
+     <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4" id="deposit_view">
+         <a href="../deposit.html">
+          <div class="card"  style="background-color:#21AEE4 ;">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold" style="color: white">Click to deposit</p>
+                    <h5 class="font-weight-bolder" style="color: white">
+                      DEPOSIT
+                    </h5>
+                  
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> </a>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4" id="ref_view">
+          <div class="card" onclick="myFunctionxvy()" style="background-color:#21AEE4 ;">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold" style="color: white" id="status">Click to copy referral link</p>
+                    <h5 class="font-weight-bolder" style="color: white" id="inactive">
+                      Refferal link
+                    </h5>
+                    <p class="mb-0">
+                      <p class="text-sm font-weight-bolder" id="print-link-left" style="color: white">Click to copy referral link</p>
+                    </p>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
+                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4" id="withdraw_view">
+          <a href="../withdraw.html">
+          <div class="card" style="background-color:#21AEE4 ;">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold" style="color: white">Click to withdraw</p>
+                    <h5 class="font-weight-bolder" style="color: white">
+                      Withdraw
+                    </h5>
+                    
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                    <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div></a>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+          <a href="Javascript:function_logout()">
+          <div class="card" style="background-color:#21AEE4 ;">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold" style="color: white">Click to og Out</p>
+                    <h5 class="font-weight-bolder" style="color: white">
+                      LOG OUT
+                    </h5>
+                    
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  
+                </div>
+              </div>
+            </div>
+          </div> </a>
+        </div>
+      </div>
+
+ 
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- End Navbar -->
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Expenses</p>
+                    <h5 class="font-weight-bolder" id="direct_referral">
+                      
+                    </h5>
+                    <p class="mb-0">
+    
+                    </p>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Balance</p>
+                    <h5 class="font-weight-bolder" id="direct">
+                      
+                    </h5>
+                    
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
+                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Withdrawn</p>
+                    <h5 class="font-weight-bolder" id="withdraws">
+                    </h5>
+                    
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                    <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Net Profit</p>
+                    <h5 class="font-weight-bolder" id="net">
+                      
+                    </h5>
+                    
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
+                    <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+ 
+    </div>
+  </main>
+  <div class="fixed-plugin">
+    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+      <i class="fa fa-cog py-2"> </i>
+    </a>
+    <div class="card shadow-lg">
+      <div class="card-header pb-0 pt-3 ">
+        <div class="float-start">
+          <h5 class="mt-3 mb-0">Argon Configurator</h5>
+          <p>See our dashboard options.</p>
+        </div>
+        <div class="float-end mt-4">
+          <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
+            <i class="fa fa-close"></i>
+          </button>
+        </div>
+        <!-- End Toggle Button -->
+      </div>
+      <hr class="horizontal dark my-1">
+      <div class="card-body pt-sm-3 pt-0 overflow-auto">
+        <!-- Sidebar Backgrounds -->
+        <div>
+          <h6 class="mb-0">Sidebar Colors</h6>
+        </div>
+        <a href="javascript:void(0)" class="switch-trigger background-color">
+          <div class="badge-colors my-2 text-start">
+            <span class="badge filter bg-gradient-primary active" data-color="primary" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-success" data-color="success" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-warning" data-color="warning" onclick="sidebarColor(this)"></span>
+            <span class="badge filter bg-gradient-danger" data-color="danger" onclick="sidebarColor(this)"></span>
+          </div>
+        </a>
+        <!-- Sidenav Type -->
+        <div class="mt-3">
+          <h6 class="mb-0">Sidenav Type</h6>
+          <p class="text-sm">Choose between 2 different sidenav types.</p>
+        </div>
+        <div class="d-flex">
+          <button class="btn bg-gradient-primary w-100 px-3 mb-2 active me-2" data-class="bg-white" onclick="sidebarType(this)">White</button>
+          <button class="btn bg-gradient-primary w-100 px-3 mb-2" data-class="bg-default" onclick="sidebarType(this)">Dark</button>
+        </div>
+        <p class="text-sm d-xl-none d-block mt-2">You can change the sidenav type just on desktop view.</p>
+        <!-- Navbar Fixed -->
+        <div class="d-flex my-3">
+          <h6 class="mb-0">Navbar Fixed</h6>
+          <div class="form-check form-switch ps-0 ms-auto my-auto">
+            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
+          </div>
+        </div>
+        <hr class="horizontal dark my-sm-4">
+        <div class="mt-2 mb-5 d-flex">
+          <h6 class="mb-0">Light / Dark</h6>
+          <div class="form-check form-switch ps-0 ms-auto my-auto">
+            <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version" onclick="darkMode(this)">
+          </div>
+        </div>
+        <a class="btn bg-gradient-dark w-100" href="https://www.creative-tim.com/product/argon-dashboard">Free Download</a>
+        <a class="btn btn-outline-dark w-100" href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard">View documentation</a>
+        <div class="w-100 text-center">
+          <a class="github-button" href="https://github.com/creativetimofficial/argon-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star creativetimofficial/argon-dashboard on GitHub">Star</a>
+          <h6 class="mt-3">Thank you for sharing!</h6>
+          <a href="https://twitter.com/intent/tweet?text=Check%20Argon%20Dashboard%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23bootstrap5&amp;url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fargon-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
+            <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
+          </a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/argon-dashboard" class="btn btn-dark mb-0 me-2" target="_blank">
+            <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--   Core JS Files   -->
+  <script src="./assets/js/core/popper.min.js"></script>
+  <script src="./assets/js/core/bootstrap.min.js"></script>
+  <script src="./assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="./assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="./assets/js/plugins/chartjs.min.js"></script>
+  <script>
+    var ctx1 = document.getElementById("chart-line").getContext("2d");
+
+    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+    gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+    gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
+    new Chart(ctx1, {
+      type: "line",
+      data: {
+        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [{
+          label: "Mobile apps",
+          tension: 0.4,
+          borderWidth: 0,
+          pointRadius: 0,
+          borderColor: "#5e72e4",
+          backgroundColor: gradientStroke1,
+          borderWidth: 3,
+          fill: true,
+          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+          maxBarThickness: 6
+
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          }
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
+        scales: {
+          y: {
+            grid: {
+              drawBorder: false,
+              display: true,
+              drawOnChartArea: true,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              padding: 10,
+              color: '#fbfbfb',
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+          x: {
+            grid: {
+              drawBorder: false,
+              display: false,
+              drawOnChartArea: false,
+              drawTicks: false,
+              borderDash: [5, 5]
+            },
+            ticks: {
+              display: true,
+              color: '#ccc',
+              padding: 20,
+              font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+              },
+            }
+          },
+        },
+      },
+    });
+  </script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="./assets/js/argon-dashboard.min.js?v=2.0.2"></script>
+
+
+
+  <div class="w3-container">
+    <h2>Direct referrals</h2>
+  
+    <table class="w3-table w3-bordered" id="direct_reffarals_table">
+      <tr>
+        <th>Username</th>
+        <th>Status</th>
+      </tr>
+    </table>
+  </div>
+
+  <div class="w3-container">
+    <h2>Indirect referrals</h2>
+  
+    <table class="w3-table w3-bordered" id="indirect_reffarals_table">
+      <tr>
+        <th>Username</th>
+        <th>Status</th>
+      </tr>
+    </table>
+  </div>
+
+
+
+
+</body>
+
+</html>
