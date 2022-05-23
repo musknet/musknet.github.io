@@ -1,299 +1,433 @@
-
-
 <!DOCTYPE html>
-<html lang="en">
-   <head>
-      <!-- basic -->
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <!-- mobile metas -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-      <!-- site metas -->
-      <title>Musk Network</title>
-      <meta name="keywords" content="">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <!-- bootstrap css -->
-      <link rel="stylesheet" href="css/bootstrap.min.css">
-      <!-- style css -->
-      <link rel="stylesheet" href="css/style.css">
-      <!-- Responsive-->
-      <link rel="stylesheet" href="css/responsive.css">
-      <!-- fevicon -->
-      <link rel="icon" href="images/fevicon.png" type="image/gif" />
-      <!-- Scrollbar Custom CSS -->
-      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
-      <!-- Tweaks for older IEs-->
-      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-      <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Metaverse Yield Network</title>
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+		<script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("Please view this demo in a modern browser that supports CSS Variables.");</script>
+	</head>
+
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+		*
+		{
+		  padding: 0;
+		  margin: 0;
+		  scroll-behavior: smooth;
+		  box-sizing: border-box;
+		}
+		body
+		{
+		  font-family: 'Poppins', sans-serif;
+		  overflow-x: hidden;
+		  background: linear-gradient(#39519f, #3939e7);
+		  z-index: -999;
+		}
+		img
+		{
+		  width: 100%;
+		}
+		ul
+		{
+		  list-style: none;
+		}
+		a
+		{
+		  text-decoration: none;
+		}
+		.container
+		{
+		  max-width: 80rem;
+		  padding: 0 2rem;
+		  margin: 0 auto;
+		}
+		nav
+		{
+		  background-color: #3939e7;
+		  width: 100%;
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  z-index: 50;
+		}
+		nav .container
+		{
+		  display: flex;
+		  justify-content: space-between;
+		  align-items: center;
+		  height: 6rem;
+		}
+		.logo
+		{
+		  max-width: 250px;
+		  display: flex;
+		  align-items: center;
+		}
+		.links ul
+		{
+		  display: flex;
+		}
+		.links a
+		{
+		  display: inline-block;
+		  padding: 0.7rem 1.2rem;
+		  margin-right: 0.6rem;
+		  color: #ffffff;
+		  font-size: 1.05rem;
+		  text-transform: uppercase;
+		  font-weight: 500;
+		  line-height: 1;
+		  border-radius: 1.5rem;
+		  transition: 0.3s;
+		}
+		.links a.active,
+		.links a:hover
+		{
+		  color: #0b0235;
+		  background: #ffffff;
+		}
+		.hamburger-menu
+		{
+		  width: 2.7rem;
+		  height: 3rem;
+		  z-index: 100;
+		  position: relative;
+		  display: none;
+		  align-items: center;
+		  justify-content: flex-end;
+		}
+		.hamburger-menu .bar 
+		{
+		  position: relative;
+		  width: 2.1rem;
+		  height: 3px;
+		  border-radius: 3px;
+		  background: #ffffff;
+		}
+		.bar::before,
+		.bar::after
+		{
+		  content: '';
+		  position: absolute;
+		  width: 2.1rem;
+		  height: 3px;
+		  border-radius: 3px;
+		  background: #ffffff;
+		}
+		.bar::before
+		{
+		  transform: translateY(-9px);
+		}
+		.bar::after
+		{
+		  transform: translateY(9px);
+		}
+		.hero
+		{
+		  position: relative;
+		  width: 100vw;
+		  height: 100vh;
+		  display: flex;
+		  align-items: center;
+		  justify-content: center;
+		  overflow: hidden;
+		}
+		.hero img
+		{
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 100%;
+		  height: 100%;
+		  object-fit: cover;
+		  pointer-events: none;
+		}
+		.hero #base
+		{
+		  z-index: 6;
+		}
+		.hero #text
+		{
+		  position: absolute;
+		  color: #fefefe;
+		  font-size: clamp(3rem, 7.5vw, 8rem);
+		  white-space: nowrap;
+		  letter-spacing: 3px;
+		  z-index: 5;
+		  right: -850px;
+		}
+		#btn
+		{
+		  font-size: 18px;
+		  position: absolute;
+		  color: #fefefe;
+		  text-decoration: none;
+		  padding: 8px 30px;
+		  display: inline-block;
+		  border: 2px solid #fefefe;
+		  border-radius: 25px;
+		  background: transparent;
+		  z-index: 7;
+		  letter-spacing: 0.51px;
+		  transform: translateY(200px);
+		}
+		.section-padding
+		{
+		  padding: 80px 0;
+		  background: #fefefe;
+		}
+		.grid
+		{
+		  display: grid;
+		  grid-template-columns: repeat(2, 1fr);
+		  align-items: center;
+		}
+		.left-content,
+		.right-content
+		{
+		  padding: 2rem;
+		}
+		h4
+		{
+		  font-weight: 700;
+		  letter-spacing: 0.51px;
+		  line-height: 1.35;
+		  text-align: justify;
+		  color: #0b0235;
+		  font-size: 1.75rem;
+		}
+		.heading
+		{
+		  font-size: 1.15rem;
+		  color: #0b0235;
+		  margin-bottom: 0.5rem;
+		}
+		p
+		{
+		  color: #0b0235;
+		  font-size: 0.9rem;
+		  padding-bottom: 2rem;
+		  padding-right: 1rem;
+		}
+		footer
+		{
+		  background: #0b0235;
+		  padding: 60px 0;
+		  text-align: center;
+		}
+		footer img
+		{
+		  max-width: 400px;
+		}
+		@media (max-width:992px)
+		{
+		  .hamburger-menu
+		  {
+			display: flex;
+		  }
+		  .links ul 
+		  {
+			display: none;
+		  }
+		  h4 
+		  {
+			font-size: 1.2rem;
+		  }
+		  .heading
+		  {
+			font-size: 1rem;
+		  }
+		  p 
+		  {
+			font-size: 0.8rem;
+		  }
+		}
+
+		.video-container {
+		position:relative;
+		padding-bottom:56.25%;
+		padding-top:30px;
+		height:0;
+		overflow:hidden;
+		}
+
+		.video-container iframe, .video-container object, .video-container embed {
+		position:absolute;
+		top:0;
+		left:0;
+		width:100%;
+		height:100%;
+		}
 
 
-      <style>
-       .warning {
-      font-size: 2px;
-      font-weight: 600;
-      color: white;
-      padding: 8px;
-      background-color: #ff9800;
-   }
-
-      </style>
-
-
-   </head>
-   <!-- body -->
-   <body class="main-layout">
-      <!-- loader  -->
-      <div class="loader_bg">
-         <div class="loader"><img src="images/loading.gif" alt="#" /></div>
-      </div>
-      <!-- end loader -->
-      <!-- header -->
-      <header>
-         <!-- header inner -->
-         <div class="header">
-            <div class="container">
-               <div class="row">
-                  <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
-                     <div class="full">
-                        <div class="center-desk">
-                           
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
-                     <nav class="navigation navbar navbar-expand-md navbar-dark ">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarsExample04">
-                           <ul class="navbar-nav mr-auto">
-                              <li class="nav-item active">
-                                 <a class="nav-link" href="#">Home</a>
-                              </li>
-                              
-                              <li class="nav-item">
-                                 <a class="nav-link" href="#service"> Service</a>
-                              </li>
-                              <li class="nav-item">
-                                 <a class="nav-link" href="#contact">Contact</a>
-                              </li>
-                              <li class="nav-item">
-                                 <a class="nav-link" href="Login.html">Log In</a>
-                              </li>
-                              <li class="nav-item">
-                                 <a class="nav-link" href="Registration.html">Sign Up</a>
-                              </li>
-                           </ul>
-                        </div>
-                     </nav>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </header>
-      <!-- end header inner -->
-      <!-- end header -->
-      <!-- banner -->
-      <section class="banner_main">
-         <div class="container">
-            <div class="row d_flex">
-               <div class="col-md-5">
-                  <div class="text-bg">
-                     <h1>Musk<br> Network</h1>
-                     <p>Transactions running right now...</p>
-                     <p class="warning" id="print-hash"></p>
-                     <p>The world's best P2P and fully automated arbitrage </p>
-                     <a href="Registration.html">Get Started</a>
-                  </div>
-               </div>
-               <div class="col-md-7">
-                  <div class="text-img">
-                     <figure><img src="images/img.png" /></figure>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </section>
-      <!-- end banner -->
-      <!-- Hosting -->
-      <div id="" class="hosting">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="titlepage">
-                     <h2>Hear from Sam</h2>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="web_hosting">
-                     <figure><iframe width="560" height="315" src="https://www.youtube.com/embed/pVlkFW43820" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
-                     <p>Arbitrage is buying cryptocurrencies in country X and selling in country Y. P2P Arbitrage is the secreat behind wealth of most people in the crypto space here is Sam Bankman telling his story.</p>
-                     <a href="Registration.html">Get Started</a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- end Hosting -->
-      <!-- Services  -->
-      <div id="service" class="Services">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="titlepage">
-                     <h2>Our Services</h2>
-                     <p>Lorem ipsum dolor sittem ametamngcing elit, per sed do eiusmoad <br>
-                        teimpor sittem elit inuning ut sed.
-                     </p>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                  <div class="Services-box">
-                     <i><img src="images/service6.png" alt="#" /></i>
-                     <h3>Crypto Investments</h3>
-                     <p></p>
-                  </div>
-               </div>
-               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                  <div class="Services-box">
-                     <i><img src="images/service2.png" alt="#" /></i>
-                     <h3>P2P Arbitrage</h3>
-                     <p></p>
-                  </div>
-               </div>
-               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                  <div class="Services-box">
-                     <i><img src="images/service4.png" alt="#" /></i>
-                     <h3>cryptocurrencies staking</h3>
-                     <p></p>
-                  </div>
-               </div>
-               
-               <a class="read_more" href="Registration.html">Get Started</a>
-            </div>
-         </div>
-      </div>
-      <!-- end Servicess -->
-      <!-- why -->
-      <div id="why" class="why">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="titlepage">
-                     <h2>Why you should choose US</h2>
-                     <p></p>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                  <div id="box_ho" class="why-box">
-                     <i><img src="images/why1.png" alt="#" /></i>
-                     <h3>Instant deposit and withdraws</h3>
-                     <p></p>
-                  </div>
-                  <a class="read_more bg" href="Registration.html">Get Started</a>
-               </div>
-               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                  <div class="why-box">
-                     <i><img src="images/why2.png" alt="#" /></i>
-                     <h3>Withdraw through MPESA</h3>
-                     <p></p>
-                  </div>
-                  <a class="read_more bg" href="Registration.html">Get Started</a>
-               </div>
-               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                  <div class="why-box">
-                     <i><img src="images/why3.png" alt="#" /></i>
-                     <h3>Worldwide Support</h3>
-                     <p></p>
-                  </div>
-                  <a class="read_more bg" href="Registration.html">Get Started</a>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- end why -->
-
-      <!--  footer -->
-      <footer>
-         <div class="footer">
-            <div class="container">
-               <div class="row">
-                  <div class="col-md-10 offset-md-1">
-                     <div class="cont">
-                        <h3>Contact us</h3>
-                        <span></span>
-                        <p>Telegram: Musk Network
-                        </p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            
-         </div>
-    
-      </footer>
-      <!-- end footer -->
-      <!-- Javascript files-->
-      <script src="js/jquery.min.js"></script>
-      <script src="js/popper.min.js"></script>
-      <script src="js/bootstrap.bundle.min.js"></script>
-      <script src="js/jquery-3.0.0.min.js"></script>
-      <script src="js/plugin.js"></script>
-      <!-- sidebar -->
-      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-      <script src="js/custom.js"></script>
-      <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-
-
-      <script>
-
-         
-         
-         var hash;
-         var show = document.getElementById("print-hash");
-         
-      
-
-           function makehash() {
-           var text = "";
-           var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
-         
-           for (var i = 0; i < 40; i++)
-             text += possible.charAt(Math.floor(Math.random() * possible.length));
-         
-             hash = "0x" + text;
-             show.innerHTML = hash;
-
-         }
-
-            
-            
-         
-         
-         setInterval(makehash, 2000);
-         
-         
-         
-         
-         
-               </script>
-         
-         
+		@media (max-width: 768px)
+		{
+		  .grid
+		  {
+			grid-template-columns: 1fr;
+		  }
+		  .left-content,
+		  .right-content
+		  {
+			padding: 0.4rem;
+		  }
+		}
+	  </style>
 
 
 
 
-   </body>
+
+	<body>
+
+		<nav>
+			<div class="container">
+			  <div class="logo">
+				
+			  </div>
+			  <div class="links">
+				<ul>
+				  <li><a href="login_signup/login.html" class="active">Login</a></li>
+				  <li><a href="login_signup/signup.html">Sign Up</a></li>
+			  <!--    <li><a href="#">About</a></li>
+				  <li><a href="#">Contact</a></li> -->
+				</ul>
+			  </div>
+			  <div class="hamburger-menu">
+				<div class="bar"></div>
+			  </div>
+			</div>
+		  </nav>
+
+		
+
+		<section class="hero">
+			<img src="images/1.png" class="translateX" data-speed="0.25" id="moon" alt="">
+			<img src="images/2.png" class="translateY" data-speed="0.35" id="clouds" alt="">
+			<img src="images/3.png" class="translateY" data-speed="0.15" id="mount" alt="">
+			<h1 id="text" class="translateX" data-speed="-3">Metaverse Yield Network</h1>
+			<a href="login_signup/login.html" id="btn">Login</a>
+			<img src="images/4.png" class="translateY" data-speed="0" id="base" alt="">
+		  </section>
+		  <section id="about" class="section-padding">
+			<div class="container grid">
+			  <div class="left-content">
+				<h4>The world's most lucrative virtual real estate company. Your gateway to the metaverse</h4>
+			  </div>
+			  <div class="right-content">
+				<div class="video-container"><iframe src="img/video.mp4"></iframe></div>
+			  </div>
+			</div>
+			<div class="container grid">
+			  <div class="left-content">
+				<h5 class="heading">Bonuses for Each person your refer</h5>
+				<p>Get awarded for each person that joins under your referral </p>
+			  </div>
+			  <div class="right-content">
+				<h5 class="heading">Daily ROI</h5>
+				<p>Guaranteed 2% Return on Investments daily</p>
+			  </div>
+			</div>
+
+
+
+			<div class="container grid">
+				<div class="left-content">
+				  <h5 class="heading">Hi! My name is Guy!</h5>
+				  <p>I will be your financial advisor through out this journey. I will guide you through every step of the journey. You can talk to a real person in the support section.</p>
+				</div>
+				<div class="right-content">
+					<img src="img/6.png" alt="">
+				</div>
+			  </div>
+
+
+			  <div class="container grid">
+				<div class="left-content">
+				  <h5 class="heading">What we will do!</h5>
+				  <p>We will invest your investment in the real estate business in the Metaverse</p>
+				</div>
+				<div class="right-content">
+					<img src="img/22.png" alt="">
+				</div>
+			  </div>
+
+
+			<div class="container grid">
+			  <div class="left-content">
+				<img src="img/sandbbox.jpg" alt="">
+			  </div>
+			  <div class="right-content">
+				<img src="img/decentraland.png" alt="">
+			  </div>
+			</div>
+			<div class="container grid">
+			  <div class="left-content">
+			<!--    <h5 class="heading">Elasticated side pockets</h5>
+				<p>Roomy external stretch pockets for water bottles or tourist guides</p> -->
+			  </div>
+			  <div class="right-content">
+			   <!-- <h5 class="heading">100% enveloping and flexible</h5>
+				<p>2.5cm recycled nylon; aluminum buckle with anodized anti-corrosion treatment</p>
+			  </div> -->
+			</div>
+			<div class="container grid">
+			  <div class="left-content">
+			<!--    <img src="images/about-4.jpg" alt=""> -->
+				<div class="wrapper">
+					<!-- The canvas element is used to draw the 3D scene -->
+					<canvas id="c"></canvas>
+				</div>
+				<div class="frame">
+					
+				</div>
+			  </div>
+			  <div class="right-content">
+			<!--    <h4>100% nylon (50% recycled, 50% remaining high strength) 251g / m² 630 denier plain weave fabric.</h4> -->
+			  </div>
+			</div> 
+		  </section>
+		  <footer>
+			<div class="container">
+			  <a href="#">
+			  <!--  <img src="images/logo.png" alt=""> -->
+			  </a>
+			</div>
+		  </footer>
+		   <script>
+			 const translateX = document.querySelectorAll(".translateX");
+		const translateY = document.querySelectorAll(".translateY");
+		window.addEventListener("scroll" ,() => {
+		  let scroll = window.pageYOffset;
+		  translateX.forEach(element => {
+			let speed = element.dataset.speed;
+			element.style.transform = `translateX(${scroll * speed}px)`;
+		  })
+		  translateY.forEach(element => {
+			let speed = element.dataset.speed;
+			element.style.transform = `translateY(${scroll * speed}px)`;
+		  })
+		})
+		   </script>
+		
+
+
+
+<!--		
+		<div class="wrapper"> -->
+		    <!-- The canvas element is used to draw the 3D scene -->
+		<!--	<canvas id="c"></canvas>
+		</div>
+		<div class="frame">
+			<h1 class="frame__title"></h1>
+		</div> -->
+	<!--	<span class="action">Click the avatar!</span> -->
+		<!-- The main Three.js file -->
+<!--		<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/108/three.min.js'></script>
+-->		<!-- This brings in the ability to load custom 3D objects in the .gltf file format. Blender allows the ability to export to this format out the box -->
+<!--		<script src='https://cdn.jsdelivr.net/gh/mrdoob/Three.js@r92/examples/js/loaders/GLTFLoader.js'></script>
+-->		<!-- partial -->
+<!--		<script  src="js/script.js"></script>
+-->	</body>
 </html>
-

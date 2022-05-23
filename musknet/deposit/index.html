@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Deposit</title>
+
+
+
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+      
+     apiKey: "AIzaSyBAskh_jJ_G2ULKhq7BRB9AqoB02d-5oLk",
+
+authDomain: "musk-network.firebaseapp.com",
+
+databaseURL: "https://musk-network-default-rtdb.firebaseio.com",
+
+projectId: "musk-network",
+
+storageBucket: "musk-network.appspot.com",
+
+messagingSenderId: "332907680949",
+
+appId: "1:332907680949:web:2fecbe138dce0de37b9afc",
+
+measurementId: "G-3RDS3MEQFR"
+      };
+    firebase.initializeApp(config);
+    
+     function record_deposit(){
+      function days_passed(dt) {
+          var current = new Date(dt.getTime());
+          var previous = new Date(dt.getFullYear(), 0, 1);
+  
+         return Math.ceil((current - previous + 1) / 86400000);
+          }
+  
+          var days_count = (days_passed(new Date()));
+    
+      var mail;    
+          
+      var data = {
+       hash: document.getElementById('hash').value,
+       address: "",
+       amount: parseInt(sessionStorage.getItem("amount")),
+       date: days_count,
+       date_uploaded: Date(),
+       approved: false
+      }
+    
+      var updates = {};
+      updates['/deposits/' + sessionStorage.getItem('username')+'/' ] = data;
+      firebase.database().ref().update(updates).then(() => {
+  
+      console.log("Saved successfully");
+      var databaserefer_mail = firebase.database().ref('/users/' + sessionStorage.getItem('username')+"/" +"/email");
+  
+      databaserefer_mail.on('value', (snapshot) =>{
+      const data2 = snapshot.val();
+      mail = data2;
+      // window.alert(data);
+  
+      });
+  
+      function sendEmail() {
+  
+  var email_html_body = "<p>Hello " +sessionStorage.getItem("username") + "!</p>" + "<h1>Deposit recorded successfully </h1> <p>Your account balance will be updated within the next 24 hours;</p><p>We hope you have a pleasant time investing with us</p>";
+  
+    Email.send({
+      Host: "smtp.gmail.com",
+      Username: "metaverseyieldnetwork@gmail.com",
+      Password: "neno$iri",
+      To: mail,
+      From: "metaverseyieldnetwork@gmail.com",
+      Subject: "Metaverse Yield - Deposit",
+      Body: email_html_body,
+    })
+      .then(function (message) {
+        console.log("mail sent successfully")
+      });
+  }
+  
+  
+    sendEmail();
+  
+  
+  
+      window.alert("Deposit recorded sucessfully! Wait 24 hours for deposit confirmation");
+  
+  
+      location.replace("../dashboard/index.html");
+  
+      }); 
+    
+    }
+    
+    
+    
+    </script>
+    
+  
+    <script>
+  
+  var image_src;
+  var our_address;
+  
+    </script>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script>
+      function print_intro(){
+  
+        if(sessionStorage.getItem("username") == null)
+                {
+                  location.replace("../login_signup.html/login.html");
+                }
+  
+  
+      var type = sessionStorage.getItem("type");
+     // type = toUpperCase(type);
+      document.title = "Deposit - "+ type;
+     // document.getElementById("type_button").innerHTML = type;
+      document.getElementById("instructions").innerHTML = "Scan QR code above and send $"+sessionStorage.getItem("amount") + " worth of "+type + " or copy our "+ type +" address on button below, then enter transaction hash and sender's address below";
+    
+      if(type == "USDT")
+      {
+        image_src = "images/usdt.jpg";;
+        our_address = "TG2MXJJFQFhWQA8YzdvCvyaWGX9KytLthG";
+      }
+
+      else if(type == "mpesa")
+      {
+
+        document.getElementById("instructions").innerHTML = "Hello please send $"+sessionStorage.getItem("amount") + " worth to +254 727 624 546 (MPESA Kenya) then enter your phone number below";
+        document.getElementById("badili").innerHTML = "Phone Number";
+        document.getElementById("potea").innerHTML = "";
+      }
+
+    else{
+      image_src = "images/btc.jpg";
+      our_address = "bc1q2vsv04zl5u6mf0va8qgx0ws267z7seu3524e06";
+    }
+    document.getElementById("qr_image").src = image_src;
+    
+    
+    }
+  
+      function copyToClipboard(e) {
+  
+  var tempItem = document.createElement('input');
+  
+  tempItem.setAttribute('type', 'text');
+  tempItem.setAttribute('display', 'none');
+  
+  let content = e;
+  if (e instanceof HTMLElement) {
+      content = e.innerHTML;
+  }
+  
+  tempItem.setAttribute('value', content);
+  document.body.appendChild(tempItem);
+  
+  tempItem.select();
+  document.execCommand('Copy');
+  
+  tempItem.parentElement.removeChild(tempItem);
+  }
+  </script>
+  
+  
+
+
+
+
+
+  </head>
+  <body onload="print_intro()">
+  
+
+  
+  <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="../img/29.png" alt="Image" class="img-fluid" id="qr_image">
+        </div>
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="mb-4">
+              <h3>Log In</h3>
+              <p class="mb-4"></p>
+            </div>
+            <form action="#" method="post">
+              <div class="form-group first">
+                <label for="username" id="badili">Transaction hash</label>
+                <input type="text" class="form-control" id="username">
+
+              </div>
+                            
+              <div class="d-flex mb-5 align-items-center">
+                <span class="ml-auto" id="instructions"></a> 
+              </div>
+
+              <input type="button" value="Copy our-Address" id="potea" class="btn btn-block btn-primary" onClick="copyToClipboard(our_address); window.alert(type + ' address copied')">
+              <input type="button" value="Submit" class="btn btn-block btn-primary" onClick="record_deposit()">
+
+              </form>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

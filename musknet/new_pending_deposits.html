@@ -53,9 +53,9 @@ measurementId: "G-3RDS3MEQFR"
           
        <td>Date</td>
        <td>Username</td>
-       <td></td>
+       <td>Address</td>
        <td>Hash</td>
-       <td></td>
+       <td>Amount</td>
        <td>Approve</td>
       </tr>
      </table>
@@ -81,9 +81,9 @@ measurementId: "G-3RDS3MEQFR"
     
        cellDate.appendChild(document.createTextNode(childData.date));
        cellUsername.appendChild(document.createTextNode(childKey));
-     //  cellAddress.appendChild(document.createTextNode(childData.address));
+       cellAddress.appendChild(document.createTextNode(childData.address));
        cellHash.appendChild(document.createTextNode(childData.hash));
-     //  cellAmount.appendChild(document.createTextNode(childData.amount));
+       cellAmount.appendChild(document.createTextNode(childData.amount));
     
        var deposit_amount_today = parseInt(childData.amount);
     
@@ -252,7 +252,7 @@ measurementId: "G-3RDS3MEQFR"
       updates['/deposits/' + childKey +"/approved" ] = true;
     
     
-    var total1 = parseInt(balance) + parseInt(15000);
+    var total1 = parseInt(balance) + parseInt(deposit_amount_today);
     if(!isNaN(total1))
     {
     var string_path;
@@ -263,7 +263,7 @@ measurementId: "G-3RDS3MEQFR"
     
     if(sponsor_username != null || sponsor_username != "")
     {
-    var total2 = direct_balance + (7000); //10% of the deposit amount
+    var total2 = direct_balance + (deposit_amount_today * 0.1); //10% of the deposit amount
     if(!isNaN(total2))
     {
       updates['/users/' + sponsor_username +"/direct_referral" ] = total2;
@@ -275,7 +275,7 @@ measurementId: "G-3RDS3MEQFR"
     
     if(sponsor2 != null || sponsor2 != "")
     {
-    var total3 = balance2 + (3000); //8% of the deposit amount
+    var total3 = balance2 + (deposit_amount_today * 0.08); //8% of the deposit amount
     if(!isNaN(total3))
     {
       updates['/users/' + sponsor2 +"/left_balance" ] = total3;
