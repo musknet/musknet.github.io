@@ -337,7 +337,7 @@ var databaserefer = firebase.database().ref('/deposits/' + username +"/date");
            {
              console.log("okay");
              sessionStorage.clear();
-             location.replace("../index.html");
+             location.replace("../../index.html");
            }
 
     </script>
@@ -410,14 +410,6 @@ var databaserefer = firebase.database().ref('/deposits/' + username +"/date");
               <a href="#" class="nav-link dropdown-toggle" onclick="sessionStorage.setItem('amount', 150); sessionStorage.setItem('type', 'mpesa'); location.replace('../deposit/index.html')" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>$150</a>
           </div>
                     
-
-
-
-
-                      
-
-
-
 
                       </div> 
                   </div>
@@ -618,7 +610,8 @@ var databaserefer = firebase.database().ref('/deposits/' + username +"/date");
 
 
                 <div id="withdraw-alert">
-                    <a href="../withdraw/index.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Withdraw USDT</a>   
+                    <a href="#" class="nav-item nav-link" onclick="sessionStorage.setItem('type', 'usdt'); location.replace('../withdraw/index.html')"><i class="fa fa-table me-2"></i>Withdraw USDT</a>
+                    <a href="#" class="nav-item nav-link" onclick="sessionStorage.setItem('type', 'mpesa'); location.replace('../withdraw/index.html')"><i class="fa fa-table me-2"></i>Withdraw MPESA</a>   
                 </div>
                     <a href="#" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Support</a>
                     <div class="nav-item dropdown">

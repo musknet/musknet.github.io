@@ -151,16 +151,19 @@ measurementId: "G-3RDS3MEQFR"
     
       if(type == "USDT")
       {
-        image_src = "images/usdt.jpg";;
+        image_src = "images/usdt.jpg";
         our_address = "TG2MXJJFQFhWQA8YzdvCvyaWGX9KytLthG";
       }
 
       else if(type == "mpesa")
       {
 
-        document.getElementById("instructions").innerHTML = "Hello please send $"+sessionStorage.getItem("amount") + " worth to +254 727 624 546 (MPESA Kenya) then enter your phone number below";
+  
+        image_src = "images/mpesa.jpg";
+        document.getElementById("instructions").innerHTML = "Hello please send $"+sessionStorage.getItem("amount") + " worth to +254 727 624 546 (MPESA Kenya). Make sure to follow instructions in the picture, then enter your phone number";
         document.getElementById("badili").innerHTML = "Phone Number";
         document.getElementById("potea").innerHTML = "";
+        
       }
 
     else{
@@ -215,7 +218,7 @@ measurementId: "G-3RDS3MEQFR"
           <div class="row justify-content-center">
             <div class="col-md-8">
               <div class="mb-4">
-              <h3>Log In</h3>
+              <h3>Deposit</h3>
               <p class="mb-4"></p>
             </div>
             <form action="#" method="post">
@@ -229,7 +232,11 @@ measurementId: "G-3RDS3MEQFR"
                 <span class="ml-auto" id="instructions"></a> 
               </div>
 
-              <input type="button" value="Copy our-Address" id="potea" class="btn btn-block btn-primary" onClick="copyToClipboard(our_address); window.alert(type + ' address copied')">
+
+            <div id="potea">
+              <input type="button" value="Copy our-Address" class="btn btn-block btn-primary" onClick="copyToClipboard(our_address); window.alert(type + ' address copied')">
+            </div>
+              
               <input type="button" value="Submit" class="btn btn-block btn-primary" onClick="record_deposit()">
 
               </form>

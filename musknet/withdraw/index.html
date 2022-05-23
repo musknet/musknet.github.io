@@ -47,12 +47,14 @@ measurementId: "G-3RDS3MEQFR"
       };
     firebase.initializeApp(config);
     var mail;
+    var name;
      function record_withdraw(){
     
       var data = {
        withdraw_amount: parseInt(document.getElementById('withdraw_amount').value),
        address: document.getElementById('address').value,
        date: Date(),
+       name: name,
        approved: false
       }
     
@@ -143,16 +145,34 @@ measurementId: "G-3RDS3MEQFR"
                   location.replace("../login_signup/login.html");
                 }
   
-  
-  
-      document.getElementById("instructions").innerHTML = "Hello "+sessionStorage.getItem("username") + " Enter your USDT address below, mininum withdraw amount is $25. Your withdrawable balance is "+sessionStorage.getItem("withdrawable_balance");
-     // window.alert(sessionStorage.getItem("total_balance"));
-      if(parseInt(sessionStorage.getItem("withdrawable_balance")) < 25){
-        window.alert("You do not have minimum withdraw balance which is $25, Your withdrawable balance is "+ sessionStorage.getItem("withdrawable_balance"));
+      if(sessionStorage.getItem("type") == "mpesa")
+      {
+
+        document.getElementById("instructions").innerHTML = "Hello "+sessionStorage.getItem("username") + " Enter your phone number and name, mininum withdraw amount is $10. Your withdrawable balance is "+sessionStorage.getItem("withdrawable_balance");
+        document.getElementById("change").innerHTML = "Phone Number";
+        name = document.getElementById("name").value;
+
+        if(parseInt(sessionStorage.getItem("withdrawable_balance")) < 10){
+        window.alert("You do not have minimum withdraw balance which is $10, Your withdrawable balance is "+ sessionStorage.getItem("withdrawable_balance"));
         location.replace("../dashboard/index.html");
       }
-    }
+
+      }
+
+       else{             
   
+      document.getElementById("instructions").innerHTML = "Hello "+sessionStorage.getItem("username") + " Enter your USDT address, mininum withdraw amount is $25. Your withdrawable balance is "+sessionStorage.getItem("withdrawable_balance");
+      name = "";
+      document.getElementById("remove").innerHTML = "";
+     
+      // window.alert(sessionStorage.getItem("total_balance"));
+      if(parseInt(sessionStorage.getItem("withdrawable_balance")) < 50){
+        window.alert("You do not have minimum withdraw balance which is $50, Your withdrawable balance is "+ sessionStorage.getItem("withdrawable_balance"));
+        location.replace("../dashboard/index.html");
+        
+      }
+    }
+      }
       function copyToClipboard(e) {
   
   var tempItem = document.createElement('input');
@@ -215,8 +235,17 @@ measurementId: "G-3RDS3MEQFR"
                 <input type="text" class="form-control" id="withdraw_amount">
 
               </div>
+
+
+              <div class="form-group last mb-4" id="remove">
+                <label for="password" id="change">Name</label>
+                <input type="text" class="form-control" id="name">
+                
+              </div>
+
+
               <div class="form-group last mb-4">
-                <label for="password">USDT Address</label>
+                <label for="password" id="change">USDT Address</label>
                 <input type="text" class="form-control" id="address">
                 
               </div>
