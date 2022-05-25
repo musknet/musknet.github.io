@@ -24,7 +24,18 @@
            $("#username").val($.trim($("#username").val()).replace(/ /g,''));
         }
       </script>
-  
+
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init("xRiokZCC16ea8H6ud");
+   })();
+</script>
+
+
 
   <script>
 		var ref;
@@ -206,7 +217,8 @@ function checkusername()
 
 </script>
 
-<script src="https://smtpjs.com/v3/smtp.js"></script>
+
+
 
 <script type="text/javascript">
     function sendEmail() {
@@ -223,41 +235,46 @@ function checkusername()
        });
 
 
-
-
-		var email_html_body = "<p>Hello " +document.getElementById("username").value + "!</p>" + "<h1>Welcome to Musk Network </h1> <p>Your account has been created successfully;</p><p>We hope you have a pleasant time investing with us</p>";
+       var email_html_body = "<p>Hello " +document.getElementById("username").value + "!</p>" + "<h1>Welcome to Musk Network </h1> <p>Your account has been created successfully;</p><p>We hope you have a pleasant time investing with us</p>";
 
       Email.send({
         Host: "smtp.gmail.com",
-        Username: "metaverseyieldnetwork@gmail.com",
-        Password: "neno$iri",
+        Username: "musknetwork3000@gmail.com",
+        Password: "Musk3000",
         To: document.getElementById('email').value,
-        From: "metaverseyieldnetwork@gmail.com",
+        From: "musknetwork3000@gmail.com",
         Subject: "Account Creation Successful",
         Body: email_html_body,
       })
         .then(function (message) {
-          console.log("mail sent successfully")
+          console.log("mail sent successfully");
+
+
+
+          var email_html_body2 = "<p>Hello " +referral + "!</p>" + "<h1>You are making progress! </h1> <p>"+document.getElementById("username").value+" has created an account has created an account using your referral link;</p><p>A bonus will be added to your account once they make a deposit</p><p>Happy investing</p><p>Musk Network Yield</p>";
+
+	        Email.send({
+          Host: "smtp.gmail.com",
+          Username: "musknetwork3000@gmail.com",
+          Password: "Musk3000",
+          To: sponsor_mail,
+          From: "musknetwork3000@gmail.com",
+          Subject: "Referral Creation Successful",
+          Body: email_html_body2,
+          })
+          .then(function (message) {
+	        console.log("mail 2 sent successfully");
+	        window.alert("Account registered successfully!");
+	        location.replace("../dashboard/index.html");;
+  });
+
+
+
         });
     
 
 
-	var email_html_body2 = "<p>Hello " +referral + "!</p>" + "<h1>You are making progress! </h1> <p>"+document.getElementById("username").value+" has created an account has created an account using your referral link;</p><p>A bonus will be added to your account once they make a deposit</p><p>Happy investing</p><p>Musk Network Yield</p>";
-
-	Email.send({
-  Host: "smtp.gmail.com",
-  Username: "metaverseyieldnetwork@gmail.com",
-  Password: "neno$iri",
-  To: sponsor_mail,
-  From: "metaverseyieldnetwork@gmail.com",
-  Subject: "Referral Creation Successful",
-  Body: email_html_body2,
-})
-  .then(function (message) {
-	console.log("mail 2 sent successfully");
-	window.alert("Account registered successfully!");
-	location.replace("../dashboard/index.html");;
-  });
+	
 	
 }
 

@@ -140,7 +140,7 @@ measurementId: "G-3RDS3MEQFR"
 
                      //window.alert(childData.balance);
                 console.log(childData.balance);
-             document.getElementById("balance").innerHTML = childData.balance;
+             
              document.getElementById("direct_referral").innerHTML = childData.direct_referral;
              document.getElementById("withdraws").innerHTML = childData.withdraws;
              document.getElementById("left_balance").innerHTML = childData.left_balance;
@@ -157,34 +157,58 @@ measurementId: "G-3RDS3MEQFR"
 });
 
 
+var time_now = Date();
+
+function days_passed(dt) {
+var current = new Date(dt.getTime());
+var previous = new Date(dt.getFullYear(), 0, 1);
+
+return Math.ceil((current - previous + 1) / 86400000);
+}
+
+var days_count = (days_passed(new Date()));
+//   window.alert(days_difference);
 
 
-var databaserefer = firebase.database().ref('/deposits/' + username +"/date");
-       var last_deposit_date;
 
-       databaserefer.on('value', (snapshot) =>{
-       const data = snapshot.val();
-       last_deposit_date = data;
-       // window.alert(data);
-  
-       var time_now = Date();
 
-       function days_passed(dt) {
-       var current = new Date(dt.getTime());
-       var previous = new Date(dt.getFullYear(), 0, 1);
+    //NEW ALGORITHM
+    
+    var databaseRefx = firebase.database().ref('deposits/');
+      
+      var my_deposits = 0;
+      var independent_roi = 0;
+      var new_roi = 0;
+      
+      databaseRefx.once('value', function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+       var childKey = childSnapshot.key;
+       var childData = childSnapshot.val();
+      
+       
+       if((childData.username == sessionStorage.getItem("username")) && childData.approved)
+       {
+        
+          my_deposits = my_deposits + parseInt(childData.amount);
+          days_difference = days_count - childData.date;   
+              
+          independent_roi = parseInt(childData.amount) * 0.02 * parseInt(days_difference);
+          
+         
 
-      return Math.ceil((current - previous + 1) / 86400000);
-       }
+          console.log(independent_roi);
+          new_roi = independent_roi + new_roi;
 
-       var days_count = (days_passed(new Date()));
 
-       days_difference = days_count - last_deposit_date;
-    //   window.alert(days_difference);
 
-       //Calculating return on investment
-       var roi = parseInt(my_investment) * 0.02 * parseInt(days_difference);
+
+ 
+
+           //Calculating return on investment
+       var roi = new_roi;
        var withdrawable_balance;
-
+       my_investment = my_deposits;
+       document.getElementById("balance").innerHTML = my_investment;
        
 
        var total_balance = parseInt(roi) + parseInt(binary) + parseInt(my_investment) - parseInt(withdraws_total) + parseInt(direct_bonus);
@@ -206,14 +230,15 @@ var databaserefer = firebase.database().ref('/deposits/' + username +"/date");
          document.getElementById("print-alert").innerHTML = "<font color=red>Account not activated! Please deposit to activate your account! </font>";
        }
 
-       else{
-        document.getElementById("deposit-alert").innerHTML = "";
+           
        }
-
-
-
-
+    
+    
+        });
       });
+
+
+
       
 //Print dirrect refferals
      var direct_table = document.getElementById('direct_reffarals_table');
@@ -235,7 +260,7 @@ var databaserefer = firebase.database().ref('/deposits/' + username +"/date");
       var cellStatus = row.insertCell(1);
 
       cellUsername.appendChild(document.createTextNode(childData.username));
-      if(childData.balance < 50){
+      if(childData.balance < 10){
        cellStatus.appendChild(document.createTextNode("inactive"));  
       }
 
@@ -263,7 +288,7 @@ var databaserefer = firebase.database().ref('/deposits/' + username +"/date");
       var cellStatus2 = row2.insertCell(1);
 
       cellUsername2.appendChild(document.createTextNode(childData2.username));
-      if(childData2.balance < 50){
+      if(childData2.balance < 10){
        cellStatus2.appendChild(document.createTextNode("inactive"));  
       }
 
@@ -824,7 +849,7 @@ var databaserefer = firebase.database().ref('/deposits/' + username +"/date");
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">Musk Network</a>, All Right Reserved. 
+                            &copy; <a href="../../index.html">Musk Network</a>, All Right Reserved. 
                         </div>
                         
                     </div>

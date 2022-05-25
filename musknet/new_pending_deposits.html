@@ -80,7 +80,7 @@ measurementId: "G-3RDS3MEQFR"
        var cellApprove = row.insertCell(5);
     
        cellDate.appendChild(document.createTextNode(childData.date));
-       cellUsername.appendChild(document.createTextNode(childKey));
+       cellUsername.appendChild(document.createTextNode(childData.username));
        cellAddress.appendChild(document.createTextNode(childData.address));
        cellHash.appendChild(document.createTextNode(childData.hash));
        cellAmount.appendChild(document.createTextNode(childData.amount));
@@ -90,7 +90,7 @@ measurementId: "G-3RDS3MEQFR"
     
        if(childData.approved == false)
        {
-          var usernam = childKey;
+          var usernam = childData.username;
            var btn  = document.createElement ("button");
            btn.innerHTML = "approve";
            
@@ -110,7 +110,7 @@ measurementId: "G-3RDS3MEQFR"
     
             //
     
-            var databaserefer = firebase.database().ref('users/' + childKey +"/balance");
+            var databaserefer = firebase.database().ref('users/' + usernam +"/balance");
             
     
             databaserefer.on('value', (snapshot) =>{
@@ -130,7 +130,7 @@ measurementId: "G-3RDS3MEQFR"
     
             
     
-           var databaserefer = firebase.database().ref('users/' + childKey +"/email");
+           var databaserefer = firebase.database().ref('users/' + usernam +"/email");
             
     
             databaserefer.on('value', (snapshot) =>{
@@ -150,7 +150,7 @@ measurementId: "G-3RDS3MEQFR"
     
     
     
-            var databaserefersponsor = firebase.database().ref('/users/' + childKey +"/sponsor");
+            var databaserefersponsor = firebase.database().ref('/users/' + usernam +"/sponsor");
             
     
             databaserefersponsor.on('value', (snapshot) =>{
@@ -225,15 +225,15 @@ measurementId: "G-3RDS3MEQFR"
     
            function sendEmail() {
     
-    var email_html_body = "<p>Hello!</p>" + "<h1>Your Metaverse Yield deposit request has been processed successfully </h1> <p></p><p>We hope you have a pleasant time investing with us</p>";
+    var email_html_body = "<p>Hello!</p>" + "<h1>Your Musknetwork deposit request has been processed successfully </h1> <p></p><p>We hope you have a pleasant time investing with us</p>";
     
     Email.send({
     Host: "smtp.gmail.com",
-    Username: "metaverseyieldnetwork@gmail.com",
-    Password: "neno$iri",
+    Username: "musknetwork3000@gmail.com",
+    Password: "Musk3000",
     To: mail,
-    From: "metaverseyieldnetwork@gmail.com",
-    Subject: "Metaverse Yield - Deposit Processed Succesfully",
+    From: "musknetwork3000@gmail.com",
+    Subject: "Musk Network - Deposit Processed Succesfully",
     Body: email_html_body,
         })
     .then(function (message) {

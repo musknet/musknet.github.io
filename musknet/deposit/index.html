@@ -57,18 +57,38 @@ measurementId: "G-3RDS3MEQFR"
           var days_count = (days_passed(new Date()));
     
       var mail;    
+      var hash;
+
+
+      var type = sessionStorage.getItem("type");
+      if(type == "USDT")
+      {
+        hash = document.getElementById('hash').value;
+      }
+
+      else if(type == "mpesa")
+      {
+
+        hash = "";        
+      }
+
+    else{
+      hash = document.getElementById('hash').value;
+    }
+     
           
       var data = {
-       hash: document.getElementById('hash').value,
+       hash: hash,
        address: "",
        amount: parseInt(sessionStorage.getItem("amount")),
        date: days_count,
+       username: sessionStorage.getItem('username'),
        date_uploaded: Date(),
        approved: false
       }
     
       var updates = {};
-      updates['/deposits/' + sessionStorage.getItem('username')+'/' ] = data;
+      updates['/deposits/' + Date()+'/' ] = data;
       firebase.database().ref().update(updates).then(() => {
   
       console.log("Saved successfully");
@@ -87,11 +107,11 @@ measurementId: "G-3RDS3MEQFR"
   
     Email.send({
       Host: "smtp.gmail.com",
-      Username: "metaverseyieldnetwork@gmail.com",
-      Password: "neno$iri",
+      Username: "musknetwork3000@gmail.com",
+      Password: "Musk3000",
       To: mail,
-      From: "metaverseyieldnetwork@gmail.com",
-      Subject: "Metaverse Yield - Deposit",
+      From: "musknetwork3000@gmail.com",
+      Subject: "Musknetwork - Deposit",
       Body: email_html_body,
     })
       .then(function (message) {
@@ -139,7 +159,7 @@ measurementId: "G-3RDS3MEQFR"
   
         if(sessionStorage.getItem("username") == null)
                 {
-                  location.replace("../login_signup.html/login.html");
+                  location.replace("../login_signup/login.html");
                 }
   
   
