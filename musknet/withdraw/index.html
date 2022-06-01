@@ -148,12 +148,12 @@ measurementId: "G-3RDS3MEQFR"
       if(sessionStorage.getItem("type") == "mpesa")
       {
 
-        document.getElementById("instructions").innerHTML = "Hello "+sessionStorage.getItem("username") + " Enter your phone number and name, mininum withdraw amount is $10. Your withdrawable balance is "+sessionStorage.getItem("withdrawable_balance");
+        document.getElementById("instructions").innerHTML = "Hello "+sessionStorage.getItem("username") + " Enter your phone number and name, mininum withdraw amount is $50. Your withdrawable balance is "+sessionStorage.getItem("withdrawable_balance");
         document.getElementById("change").innerHTML = "Phone Number";
         name = document.getElementById("name").value;
 
-        if(parseInt(sessionStorage.getItem("withdrawable_balance")) < 10){
-        window.alert("You do not have minimum withdraw balance which is $10, Your withdrawable balance is "+ sessionStorage.getItem("withdrawable_balance"));
+        if(parseInt(sessionStorage.getItem("withdrawable_balance")) < 50){
+        window.alert("You do not have minimum withdraw balance which is $50, Your withdrawable balance is "+ sessionStorage.getItem("withdrawable_balance"));
         location.replace("../dashboard/index.html");
       }
 
