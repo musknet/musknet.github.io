@@ -49,14 +49,10 @@ measurementId: "G-3RDS3MEQFR"
     var mail;
     var name;
     var address;
-    var clicked = false;
+    
      function record_withdraw(){
       
-      if(clicked){
-
-      }
-      else{
-      clicked = true;
+    
       if(sessionStorage.getItem("type") == "mpesa")
       {address = ""}
       else{
@@ -127,7 +123,7 @@ measurementId: "G-3RDS3MEQFR"
   
   }).catch(error => {console.log('Error:', error)})
   
-     }  
+       
      }
   
   
