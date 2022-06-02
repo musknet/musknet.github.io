@@ -161,7 +161,7 @@ measurementId: "G-3RDS3MEQFR"
       if(sessionStorage.getItem("type") == "mpesa")
       {
 
-        document.getElementById("instructions").innerHTML = "Hello "+sessionStorage.getItem("username") + " Enter your phone number and name, mininum withdraw amount is $50. Your withdrawable balance is "+sessionStorage.getItem("withdrawable_balance");
+        document.getElementById("instructions").innerHTML = "Hello "+sessionStorage.getItem("username") + " Enter your phone number and name, mininum withdraw amount is $50. Your withdrawable balance is $"+sessionStorage.getItem("withdrawable_balance");
         document.getElementById("change").innerHTML = "Phone Number";
         document.getElementById("ficha").innerHTML = "";
         name = document.getElementById("name").value;
@@ -175,7 +175,7 @@ measurementId: "G-3RDS3MEQFR"
 
        else{             
   
-      document.getElementById("instructions").innerHTML = "Hello "+sessionStorage.getItem("username") + " Enter your USDT address, mininum withdraw amount is $25. Your withdrawable balance is "+sessionStorage.getItem("withdrawable_balance");
+      document.getElementById("instructions").innerHTML = "Hello "+sessionStorage.getItem("username") + " Enter your USDT address, mininum withdraw amount is $50. Your withdrawable balance is $"+sessionStorage.getItem("withdrawable_balance");
       name = "";
       document.getElementById("remove").innerHTML = "";
      
