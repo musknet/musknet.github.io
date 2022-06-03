@@ -45,8 +45,17 @@ appId: "1:332907680949:web:2fecbe138dce0de37b9afc",
 measurementId: "G-3RDS3MEQFR"
       };
     firebase.initializeApp(config);
+    var clicked = false;
     
      function record_deposit(){
+
+      if(clicked)
+      {
+
+      }
+
+      else{
+      clicked = true;
       function days_passed(dt) {
           var current = new Date(dt.getTime());
           var previous = new Date(dt.getFullYear(), 0, 1);
@@ -131,6 +140,10 @@ measurementId: "G-3RDS3MEQFR"
   
       }); 
     
+
+    }
+
+
     }
     
     
@@ -244,7 +257,7 @@ measurementId: "G-3RDS3MEQFR"
             <form action="#" method="post">
               <div class="form-group first">
                 <label for="username" id="badili">Transaction hash</label>
-                <input type="text" class="form-control" id="username">
+                <input type="text" class="form-control" id="hash">
 
               </div>
                             
